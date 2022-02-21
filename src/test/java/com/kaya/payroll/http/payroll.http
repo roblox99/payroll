@@ -1,0 +1,4 @@
+GET {{host}}/employees/1
+
+###
+GET {{host}}/employees
