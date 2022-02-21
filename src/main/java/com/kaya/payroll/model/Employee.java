@@ -1,9 +1,9 @@
 package com.kaya.payroll.model;
 
-import java.util.Objects;
-import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Objects;
 
 // JPA annotation to make this object ready for storage in a JPA-based data store
 @Entity
@@ -13,15 +13,17 @@ public class Employee {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String role;
 
     public Employee() {
 
     }
 
-    public Employee(String name, String role) {
-        this.name = name;
+    public Employee(String firstName, String lastName, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
@@ -33,12 +35,30 @@ public class Employee {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getName() {
-        return name;
+        return firstName + " " + lastName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        String[] nameParts = name.split(" ");
+        firstName = nameParts[0];
+        lastName = nameParts[1];
     }
 
     public String getRole() {
@@ -54,20 +74,21 @@ public class Employee {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return id.equals(employee.id) && name.equals(employee.name) && role.equals(employee.role);
+        return id.equals(employee.id) && firstName.equals(employee.firstName) && lastName.equals(employee.lastName) && role.equals(employee.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role);
+        return Objects.hash(id, firstName, lastName, role);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Employee{id=%d, name=\"%s\", role=\"%s\"}",
+                "Employee{id=%d, firstName=\"%s\", lastName=\"%s\", role=\"%s\"}",
                 id,
-                name,
+                firstName,
+                lastName,
                 role
         );
     }

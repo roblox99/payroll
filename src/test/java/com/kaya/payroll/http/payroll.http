@@ -1,4 +1,32 @@
+###
+GET {{host}}/employees
+
+###
 GET {{host}}/employees/1
 
 ###
-GET {{host}}/employees
+GET {{host}}/employees/2
+
+###
+POST {{host}}/employees
+Content-Type: application/json
+
+{
+  "name": "Manuel Kaya",
+  "role": "programmer"
+}
+
+###
+GET {{host}}/employees/3
+
+###
+PUT {{host}}/employees/3
+Content-Type: application/json
+
+{
+  "name": "Manuel Kaya",
+  "role": "software engineer"
+}
+
+###
+DELETE {{host}}/employees/3

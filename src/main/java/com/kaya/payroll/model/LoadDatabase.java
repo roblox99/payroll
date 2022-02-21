@@ -1,7 +1,6 @@
 package com.kaya.payroll.model;
 
 import com.kaya.payroll.repository.EmployeeRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,8 +18,8 @@ public class LoadDatabase {
     @Bean
     public CommandLineRunner initDatabase(EmployeeRepository repository) {
         return args -> {
-            logger.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar")));
-            logger.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief")));
+            logger.info("Preloading " + repository.save(new Employee("Bilbo", "Baggins", "burglar")));
+            logger.info("Preloading " + repository.save(new Employee("Frodo", "Baggins", "thief")));
         };
     }
 
