@@ -18,7 +18,6 @@ public class Employee {
     private String role;
 
     public Employee() {
-
     }
 
     public Employee(String firstName, String lastName, String role) {
@@ -56,9 +55,9 @@ public class Employee {
     }
 
     public void setName(String name) {
-        String[] nameParts = name.split(" ");
-        firstName = nameParts[0];
-        lastName = nameParts[1];
+        int split = name.lastIndexOf(" ");
+        firstName = name.substring(0, split).trim();
+        lastName = name.substring(split + 1).trim();
     }
 
     public String getRole() {
@@ -73,6 +72,7 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
+
         Employee employee = (Employee) o;
         return id.equals(employee.id) && firstName.equals(employee.firstName) && lastName.equals(employee.lastName) && role.equals(employee.role);
     }

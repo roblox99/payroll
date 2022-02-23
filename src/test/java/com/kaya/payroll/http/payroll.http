@@ -30,3 +30,12 @@ Content-Type: application/json
 
 ###
 DELETE {{host}}/employees/3
+
+###
+GET {{host}}/orders
+
+###
+DELETE {{host}}/orders/4/cancel
+
+###
+PUT {{host}}/orders/4/complete

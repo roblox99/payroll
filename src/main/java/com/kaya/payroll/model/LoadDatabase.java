@@ -1,6 +1,7 @@
 package com.kaya.payroll.model;
 
 import com.kaya.payroll.repository.EmployeeRepository;
+import com.kaya.payroll.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -16,10 +17,19 @@ public class LoadDatabase {
     private static final Logger logger = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    public CommandLineRunner initDatabase(EmployeeRepository repository) {
+    public CommandLineRunner initDatabase(EmployeeRepository employeeRepository, OrderRepository orderRepository) {
         return args -> {
-            logger.info("Preloading " + repository.save(new Employee("Bilbo", "Baggins", "burglar")));
-            logger.info("Preloading " + repository.save(new Employee("Frodo", "Baggins", "thief")));
+            employeeRepository.save(new Employee("Bilbo", "Baggins", "burglar"));
+            employeeRepository.save(new Employee("Frodo", "Baggins", "thief"));
+            employeeRepository.findAll().forEach(
+                    employee -> logger.info("Preloaded " + employee)
+            );
+
+            orderRepository.save(new Order("MacBook Pro", Status.COMPLETED));
+            orderRepository.save(new Order("iPhone 13", Status.IN_PROGRESS));
+            orderRepository.findAll().forEach(
+                    order -> logger.info("Preloading " + order)
+            );
         };
     }
 

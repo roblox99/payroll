@@ -130,7 +130,7 @@ public class EmployeeController {
                         employee -> {
                             employee.setName(newEmployee.getName());
                             employee.setRole(newEmployee.getRole());
-                            return repository.save(newEmployee);
+                            return employee;
                         }
                 )
                 .orElseGet(
@@ -139,16 +139,24 @@ public class EmployeeController {
                             return repository.save(newEmployee);
                         }
                 );
+
+        // The Employee object returned by the save() method is wrapped using the EmployeeModelAssembler into an
+        // EnitityModel<Employee>.
         EntityModel<Employee> entityModel = assembler.toModel(updatedEmployee);
 
+        // getRequiredLink() returns the SELF link created by the assembler. In order to call the created()
+        // method, which specifies a more detailed HTTP 201 Created response, the link must be turned into an URI.
+        // Finally the entityModel employee is put into the response body.
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
     }
 
     @DeleteMapping("/employees/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
         repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
